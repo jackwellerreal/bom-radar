@@ -1,9 +1,3 @@
-from timed import TimedExecution
-
-timer = TimedExecution()
-
-timer.start()
-
 import random
 import matplotlib.pyplot as plt
 from perlin_noise import PerlinNoise
@@ -94,7 +88,3 @@ for i in range(x):
 
 plt.imshow(pic, cmap='gray')
 plt.savefig('images/weather.png')
-
-timer.end()
-total_time = timer.get_elapsed_time()
-print(f'code ran in {total_time} seconds')
