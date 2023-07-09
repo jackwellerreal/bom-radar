@@ -87,4 +87,4 @@ for i in range(x):
     pic.append(row)
 
 plt.imshow(pic, cmap='gray')
-plt.savefig('images/weather.png')
+plt.savefig('images/cloudtest.png')
