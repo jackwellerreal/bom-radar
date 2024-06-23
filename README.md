@@ -1,9 +1,7 @@
 # BOM Radar
 
-python code that makes a bom radar image
-
-working on cloud generation
+Python code that gets the latest radar image from the Australian Bureau of Meteorology (BOM) website and displays it in a gif.
 
 example:
 
-![example](example.png)
+![example](example.gif)
