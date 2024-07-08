@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 
 # --*-- --*--
+# This script creates an animated gif of the weather radar in Australia.
+#
 # Adapted from 'Create an Animated GIF of the Weather Radar in Australia' by Roland Thompson
 # https://medium.com/@rolanditaru/create-an-animated-gif-of-the-weather-radar-in-australia-37446a0f4de0
+#
+# The Bureau of Meteorology (BOM) is the copyright holder of the radar images 
+# http://www.bom.gov.au/other/copyright.shtml
+#
+# This code is under the MIT License.
 # --*-- --*--
 
 import io
@@ -15,7 +22,7 @@ radar_id = input("Enter the radar ID: ")
 print("")
 
 start = time.time()
-print(f"{"{:.2f}".format(round((start - start), 2))} | Starting...")
+print(f"{'{:.2f}'.format(round((start - start), 2))} | Starting...")
 
 frames = []
 
@@ -23,7 +30,7 @@ ftp = ftplib.FTP('ftp.bom.gov.au')
 ftp.login()
 ftp.cwd('anon/gen/radar_transparencies/')
 
-print(f"{"{:.2f}".format(round((time.time() - start), 2))} | Connected to the FTP server")
+print(f"{'{:.2f}'.format(round((time.time() - start), 2))} | Connected to the FTP server")
 
 # Get the legend image
 file_obj = io.BytesIO()
@@ -31,7 +38,7 @@ file_obj = io.BytesIO()
 ftp.retrbinary('RETR ' + f'IDR.legend.0.png', file_obj.write)
 base_image = Image.open(file_obj).convert('RGBA')
     
-print(f"{"{:.2f}".format(round((time.time() - start), 2))} | Added legend to the background")
+print(f"{'{:.2f}'.format(round((time.time() - start), 2))} | Added legend to the background")
 
 # Get the background and topography images
 for layer in ['background', 'topography']:
@@ -41,7 +48,7 @@ for layer in ['background', 'topography']:
     image = Image.open(file_obj).convert('RGBA')
     base_image.paste(image, (0,0), image)
     
-    print(f"{"{:.2f}".format(round((time.time() - start), 2))} | Added {layer} to the background")
+    print(f"{'{:.2f}'.format(round((time.time() - start), 2))} | Added {layer} to the background")
 
 ftp.quit()
 
@@ -64,11 +71,11 @@ for file in files:
         frame = base_image.copy()
         frame.paste(image, (0,0),image)
         frames.append(frame)
-        print(f"{"{:.2f}".format(round((time.time() - start), 2))} | Added {file} to the frames list")
+        print(f"{'{:.2f}'.format(round((time.time() - start), 2))} | Added {file} to the frames list")
     except Exception as e:
         print(f'Error: {e}')
 
-print(f"{"{:.2f}".format(round((time.time() - start), 2))} | All images loaded!")
+print(f"{'{:.2f}'.format(round((time.time() - start), 2))} | All images loaded!")
 
 ftp.quit()
 
@@ -85,12 +92,12 @@ for i, frame in enumerate(frames):
         range_image = Image.open(file_obj).convert('RGBA')
         frame.paste(range_image, (0,0), range_image)
         frames[i] = frame
-        print(f"{"{:.2f}".format(round((time.time() - start), 2))} | Added {layer} to frame {i}")
+        print(f"{'{:.2f}'.format(round((time.time() - start), 2))} | Added {layer} to frame {i}")
 
 # Save the frames as a gif
-print(f"{"{:.2f}".format(round((time.time() - start), 2))} | Creating the gif...")
+print(f"{'{:.2f}'.format(round((time.time() - start), 2))} | Creating the gif...")
 frames[0].save('radar.gif', save_all=True, append_images=frames[1:], duration=500, loop=0)
 
 # Alert the user that the gif has been created
-print(f"{"{:.2f}".format(round((time.time() - start), 2))} | Done!")
+print(f"{'{:.2f}'.format(round((time.time() - start), 2))} | Done!")
 print("")
